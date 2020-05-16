@@ -1,0 +1,24 @@
+#@data/values
+---
+concourse:
+  web:
+    external_url: https://concourse.local.maki.lol
+    auth:
+      main_team:
+        local_user:
+          name: admin
+          password: admin
+  vault:
+    url: ...
+    auth_param: ...
+secrets:
+  web_tls_cert: |
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+
+  web_tls_key: |
+    ----- BEGIN RSA PRIVATE KEY-----
+    ...
+    -----END RSA PRIVATE KEY-----
+

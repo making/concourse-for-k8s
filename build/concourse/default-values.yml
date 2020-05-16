@@ -1,0 +1,6 @@
+worker:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi

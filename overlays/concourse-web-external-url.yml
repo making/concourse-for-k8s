@@ -1,0 +1,15 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Deployment","metadata":{"name":"concourse-web"}})
+---
+spec:
+  template:
+    spec:
+      containers:
+      #@overlay/match by="name"
+      - name: concourse-web
+        env:
+        #@overlay/match by="name", missing_ok=True
+        - name: CONCOURSE_EXTERNAL_URL
+          value: #@ data.values.concourse.web.external_url

@@ -1,0 +1,21 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: concourse-web
+  namespace: concourse
+spec:
+  rules:
+  - host: #@ data.values.concourse.web.external_url.split("//")[1]
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: concourse-web
+          servicePort: 8080
+  tls: # ここを追加
+  - hosts:
+    - #@ data.values.concourse.web.external_url.split("//")[1]
+    secretName: concourse-web-tls
