@@ -1,0 +1,19 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - manual: {}
+    path: concourse
+  path: config/_ytt_lib
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #97 from concourse/concurrent-request-limits...'
+      sha: 6dd101be250f06f33995a4d677ffd26e8c040e78
+    path: .
+  path: build/concourse/_vendir
+- contents:
+  - git:
+      commitTitle: '[stable/several] Fix typo in deprecation comment (#21787)...'
+      sha: 9e28c906fc7a8e62e77a0743cd4b3bd38fbba008
+    path: .
+  path: build/postgresql/_vendir
+kind: LockConfig

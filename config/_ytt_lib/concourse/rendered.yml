@@ -6,7 +6,7 @@ metadata:
     helm.sh/resource-policy: keep
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-main
@@ -16,7 +16,7 @@ kind: PodDisruptionBudget
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -31,7 +31,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web
@@ -41,7 +41,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -53,7 +53,7 @@ kind: Secret
 metadata:
   labels:
     app: postgresql
-    chart: postgresql-6.5.5
+    chart: postgresql-8.6.4
     heritage: Helm
     release: concourse
   name: concourse-postgresql
@@ -69,7 +69,7 @@ kind: Secret
 metadata:
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web
@@ -83,7 +83,7 @@ kind: Secret
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -99,7 +99,7 @@ kind: ConfigMap
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -109,7 +109,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web
@@ -126,7 +126,7 @@ kind: Role
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -145,7 +145,7 @@ kind: RoleBinding
 metadata:
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web-main
@@ -164,7 +164,7 @@ kind: RoleBinding
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -181,16 +181,16 @@ kind: Service
 metadata:
   labels:
     app: postgresql
-    chart: postgresql-6.5.5
+    chart: postgresql-8.6.4
     heritage: Helm
     release: concourse
   name: concourse-postgresql-headless
 spec:
   clusterIP: None
   ports:
-  - name: postgresql
+  - name: tcp-postgresql
     port: 5432
-    targetPort: postgresql
+    targetPort: tcp-postgresql
   selector:
     app: postgresql
     release: concourse
@@ -201,15 +201,15 @@ kind: Service
 metadata:
   labels:
     app: postgresql
-    chart: postgresql-6.5.5
+    chart: postgresql-8.6.4
     heritage: Helm
     release: concourse
   name: concourse-postgresql
 spec:
   ports:
-  - name: postgresql
+  - name: tcp-postgresql
     port: 5432
-    targetPort: postgresql
+    targetPort: tcp-postgresql
   selector:
     app: postgresql
     release: concourse
@@ -221,7 +221,7 @@ kind: Service
 metadata:
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web
@@ -242,7 +242,7 @@ kind: Service
 metadata:
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -265,7 +265,7 @@ metadata:
         URL: index.docker.io/concourse/concourse@sha256:72c740f02074c00bc2860237315af04c7ed604e788d7d5ef10a2b818fa066eed
   labels:
     app: concourse-web
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-web
@@ -279,7 +279,7 @@ spec:
     metadata:
       annotations:
         checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-        checksum/secrets: 356cdda3fb8af54e8689022422f35ba4aecca0625127a46138e3c5d5570f911b
+        checksum/secrets: baf8ad973b5c054cf1d49751d60cb884759ece051cc9dbfe5d6ad7b1e6d36327
       labels:
         app: concourse-web
         release: concourse
@@ -430,18 +430,13 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 11.5.0-debian-9-r60
+        - Tag: 11.7.0-debian-10-r9
           Type: resolved
-          URL: docker.io/bitnami/postgresql:11.5.0-debian-9-r60
-        URL: index.docker.io/bitnami/postgresql@sha256:7b8f251a3ffdc3a5392b6b7bd1ac863d34f7cb1e9cc0ec3b2f92a45f9570eae5
-      - Metas:
-        - Tag: stretch
-          Type: resolved
-          URL: docker.io/bitnami/minideb:stretch
-        URL: index.docker.io/bitnami/minideb@sha256:654db38d4fe6afbba054dd8e1da4f27530f9fa5913725f3250b79001b09911e8
+          URL: docker.io/bitnami/postgresql:11.7.0-debian-10-r9
+        URL: index.docker.io/bitnami/postgresql@sha256:f18ba80a1de4c8b93ff4bffa38f783c1e267c1e4a649e2b1296352a53fd12f1f
   labels:
     app: postgresql
-    chart: postgresql-6.5.5
+    chart: postgresql-8.6.4
     heritage: Helm
     release: concourse
   name: concourse-postgresql
@@ -457,7 +452,7 @@ spec:
     metadata:
       labels:
         app: postgresql
-        chart: postgresql-6.5.5
+        chart: postgresql-8.6.4
         heritage: Helm
         release: concourse
         role: master
@@ -482,7 +477,9 @@ spec:
               name: concourse-postgresql
         - name: POSTGRES_DB
           value: concourse
-        image: index.docker.io/bitnami/postgresql@sha256:7b8f251a3ffdc3a5392b6b7bd1ac863d34f7cb1e9cc0ec3b2f92a45f9570eae5
+        - name: POSTGRESQL_ENABLE_LDAP
+          value: "no"
+        image: index.docker.io/bitnami/postgresql@sha256:f18ba80a1de4c8b93ff4bffa38f783c1e267c1e4a649e2b1296352a53fd12f1f
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -498,7 +495,7 @@ spec:
         name: concourse-postgresql
         ports:
         - containerPort: 5432
-          name: postgresql
+          name: tcp-postgresql
         readinessProbe:
           exec:
             command:
@@ -506,8 +503,8 @@ spec:
             - -c
             - -e
             - |
-              pg_isready -U "concourse" -d "concourse" -h 127.0.0.1 -p 5432
-              [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+              exec pg_isready -U "concourse" -d "concourse" -h 127.0.0.1 -p 5432
+              [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
           failureThreshold: 6
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -520,34 +517,19 @@ spec:
         securityContext:
           runAsUser: 1001
         volumeMounts:
+        - mountPath: /dev/shm
+          name: dshm
         - mountPath: /bitnami/postgresql
           name: data
           subPath: null
-      initContainers:
-      - command:
-        - /bin/sh
-        - -c
-        - |
-          mkdir -p /bitnami/postgresql/data
-          chmod 700 /bitnami/postgresql/data
-          find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
-            xargs chown -R 1001:1001
-        image: index.docker.io/bitnami/minideb@sha256:654db38d4fe6afbba054dd8e1da4f27530f9fa5913725f3250b79001b09911e8
-        imagePullPolicy: Always
-        name: init-chmod-data
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-        securityContext:
-          runAsUser: 0
-        volumeMounts:
-        - mountPath: /bitnami/postgresql
-          name: data
-          subPath: null
+      initContainers: null
       securityContext:
         fsGroup: 1001
-      volumes: null
+      volumes:
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 1Gi
+        name: dshm
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
@@ -577,7 +559,7 @@ metadata:
         URL: index.docker.io/concourse/concourse@sha256:72c740f02074c00bc2860237315af04c7ed604e788d7d5ef10a2b818fa066eed
   labels:
     app: concourse-worker
-    chart: concourse-10.2.0
+    chart: concourse-10.2.3
     heritage: Helm
     release: concourse
   name: concourse-worker
@@ -592,7 +574,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/secrets: 91cecad4f5e0233bc3741b90d293b9dd8054f092549d2fe3e83221fc5b29a2d1
+        checksum/secrets: 4b2a23cd8c5b1ae1b1e972755bfd2cc6f5c4a45f457135d54add68a0e85b2932
       labels:
         app: concourse-worker
         release: concourse

@@ -1,0 +1,27 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: config/_ytt_lib
+  contents:
+  - path: concourse
+    manual: {}
+- path: build/concourse/_vendir
+  contents:
+  - path: .
+    git:
+      url: https://github.com/concourse/concourse-chart
+      ref: 6dd101be250f06f33995a4d677ffd26e8c040e78 # version 10.2.3
+    includePaths:
+    - templates/*
+    - Chart.yaml
+    - requirements.*
+    - LICENSE.md
+    - values.yaml
+- path: build/postgresql/_vendir
+  contents:
+  - path: .
+    git:
+      url: https://github.com/helm/charts
+      ref: 9e28c906fc7a8e62e77a0743cd4b3bd38fbba008 # version 8.6.4
+    includePaths:
+    - stable/postgresql/**/*
