@@ -8,6 +8,8 @@ concourse:
         local_user:
           name: admin
           password: admin
+    tls:
+      bind_port: 443
   vault:
     url: ...
     auth_param: ...

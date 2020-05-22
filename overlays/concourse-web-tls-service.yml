@@ -1,0 +1,11 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Service","metadata":{"name":"concourse-web"}})
+---
+spec:
+  ports:
+  #@overlay/match by="name", missing_ok=True
+  - name: atc-tls
+    port: #@ data.values.concourse.web.tls.bind_port
+    targetPort: atc-tls

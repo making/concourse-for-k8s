@@ -1,0 +1,7 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Service","metadata":{"name":"concourse-web"}})
+---
+spec:
+  type: LoadBalancer

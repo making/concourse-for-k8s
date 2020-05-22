@@ -2,12 +2,49 @@
 #@ load("@ytt:base64", "base64")
 #@ load("@ytt:overlay", "overlay")
 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: concourse-web-tls
-  namespace: concourse
-type: kubernetes.io/tls
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"concourse-web"}})
+---
 data:
-  tls.crt: #@ base64.encode(data.values.secrets.web_tls_cert)
-  tls.key: #@ base64.encode(data.values.secrets.web_tls_key)
+  #@overlay/match missing_ok=True
+  web-tls-cert: #@ base64.encode(data.values.secrets.web_tls_cert)
+  #@overlay/match missing_ok=True
+  web-tls-key: #@ base64.encode(data.values.secrets.web_tls_key)
+
+#@overlay/match by=overlay.subset({"kind":"Deployment","metadata":{"name":"concourse-web"}})
+---
+spec:
+  template:
+    spec:
+      containers:
+      #@overlay/match by="name"
+      - name: concourse-web
+        env:
+        #@overlay/match by="name", missing_ok=True
+        - name: CONCOURSE_TLS_BIND_PORT
+          value: #@ str(data.values.concourse.web.tls.bind_port)
+        #@overlay/match by="name", missing_ok=True
+        - name: CONCOURSE_TLS_CERT
+          value: /concourse-web-tls/client.cert
+        #@overlay/match by="name", missing_ok=True
+        - name: CONCOURSE_TLS_KEY
+          value: /concourse-web-tls/client.key
+        volumeMounts:
+        #@overlay/match by="name", missing_ok=True
+        - name: web-tls
+          mountPath: /concourse-web-tls
+          readOnly: true
+        ports:
+        #@overlay/match by="name", missing_ok=True
+        - name: atc-tls
+          containerPort: #@ data.values.concourse.web.tls.bind_port
+      volumes:
+      #@overlay/match by="name", missing_ok=True
+      - name: web-tls
+        secret:
+          secretName: concourse-web
+          items:
+          - key: web-tls-cert
+            path: client.cert
+          - key: web-tls-key
+            path: client.key
+          defaultMode: 256
