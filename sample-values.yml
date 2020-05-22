@@ -2,7 +2,7 @@
 ---
 concourse:
   web:
-    external_url: https://concourse.local.maki.lol
+    external_url: http://localhost:8080
     auth:
       main_team:
         local_user:
